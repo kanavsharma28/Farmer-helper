@@ -1,0 +1,752 @@
+// ====================================================================
+// Crop Profit Calculator — Data & Calculation Engine
+// API-ready models, default presets, and math helpers
+// ====================================================================
+
+// ── Crops Catalog ──────────────────────────────────────────────────
+export const CROPS_CATALOG = [
+  {
+    id: 'wheat',
+    nameEn: 'Wheat',
+    nameHi: 'गेहूं',
+    variety: 'HD-2967 / HD-3086',
+    emoji: '🌾',
+    icon: 'grass',
+    season: 'rabi',
+    defaultYieldPerAcre: 60, // Quintals
+    defaultPricePerQtl: 2400, // ₹ per Quintal
+    mspPrice: 2275,
+    benchmarkRange: '₹2,350 - ₹2,450',
+    typicalCostsPerAcre: {
+      seeds: 4000,
+      fertilizer: 5000,
+      protection: 2500,
+      labour: 6000,
+      irrigation: 2500,
+      machinery: 3000,
+      other: 1250,
+    },
+    riskLevelEn: 'Low Risk',
+    riskLevelHi: 'बहुत कम जोखिम',
+    notesHi: 'स्थिर मांग, सुनिश्चित सरकारी खरीद (MSP) एवं न्यूनतम मूल्य उतार-चढ़ाव।',
+  },
+  {
+    id: 'mustard',
+    nameEn: 'Mustard',
+    nameHi: 'सरसों',
+    variety: 'Pusa Bold / Giriraj',
+    emoji: '🌼',
+    icon: 'eco',
+    season: 'rabi',
+    defaultYieldPerAcre: 15,
+    defaultPricePerQtl: 5400,
+    mspPrice: 5650,
+    benchmarkRange: '₹5,300 - ₹5,700',
+    typicalCostsPerAcre: {
+      seeds: 2500,
+      fertilizer: 4000,
+      protection: 2000,
+      labour: 4500,
+      irrigation: 1500,
+      machinery: 2500,
+      other: 1000,
+    },
+    riskLevelEn: 'Moderate Risk',
+    riskLevelHi: 'मध्यम जोखिम (पाला/मौसम)',
+    notesHi: 'कम सिंचाई की आवश्यकता, तेल मिलों में निरंतर मांग।',
+  },
+  {
+    id: 'gram',
+    nameEn: 'Gram (Chana)',
+    nameHi: 'चना (देसी)',
+    variety: 'JG 11 / Vishal',
+    emoji: '🌱',
+    icon: 'nutrition',
+    season: 'rabi',
+    defaultYieldPerAcre: 12,
+    defaultPricePerQtl: 5800,
+    mspPrice: 5440,
+    benchmarkRange: '₹5,600 - ₹6,100',
+    typicalCostsPerAcre: {
+      seeds: 3000,
+      fertilizer: 3000,
+      protection: 2500,
+      labour: 4000,
+      irrigation: 1500,
+      machinery: 2500,
+      other: 1000,
+    },
+    riskLevelEn: 'Low Risk',
+    riskLevelHi: 'कम जोखिम',
+    notesHi: 'भूमि में नाइट्रोजन की वृद्धि, कम पानी व खाद में अच्छी उपज।',
+  },
+  {
+    id: 'paddy',
+    nameEn: 'Paddy (Basmati)',
+    nameHi: 'धान (बासमती)',
+    variety: 'Pusa 1121 / 1509',
+    emoji: '🌾',
+    icon: 'grass',
+    season: 'kharif',
+    defaultYieldPerAcre: 25,
+    defaultPricePerQtl: 4200,
+    mspPrice: 2183,
+    benchmarkRange: '₹3,900 - ₹4,450',
+    typicalCostsPerAcre: {
+      seeds: 3500,
+      fertilizer: 6500,
+      protection: 3500,
+      labour: 8000,
+      irrigation: 4500,
+      machinery: 4000,
+      other: 2000,
+    },
+    riskLevelEn: 'Moderate Risk',
+    riskLevelHi: 'मध्यम जोखिम',
+    notesHi: 'निर्यात मांग के कारण उच्च मूल्य, लेकिन जल व श्रम सघन।',
+  },
+  {
+    id: 'potato',
+    nameEn: 'Potato',
+    nameHi: 'आलू',
+    variety: 'Kufri Pukhraj / Jyoti',
+    emoji: '🥔',
+    icon: 'spa',
+    season: 'rabi',
+    defaultYieldPerAcre: 120,
+    defaultPricePerQtl: 1400,
+    mspPrice: 0,
+    benchmarkRange: '₹1,250 - ₹1,650',
+    typicalCostsPerAcre: {
+      seeds: 18000,
+      fertilizer: 9000,
+      protection: 5000,
+      labour: 9000,
+      irrigation: 4000,
+      machinery: 5000,
+      other: 3500,
+    },
+    riskLevelEn: 'High Volatility',
+    riskLevelHi: 'मूल्य में उतार-चढ़ाव',
+    notesHi: 'कोल्ड स्टोरेज सुविधा आवश्यक, बंपर उपज पर अधिक मुनाफा।',
+  },
+  {
+    id: 'tomato',
+    nameEn: 'Tomato',
+    nameHi: 'टमाटर',
+    variety: 'Abhinav / US-6242',
+    emoji: '🍅',
+    icon: 'eco',
+    season: 'zaid',
+    defaultYieldPerAcre: 150,
+    defaultPricePerQtl: 1800,
+    mspPrice: 0,
+    benchmarkRange: '₹1,400 - ₹2,200',
+    typicalCostsPerAcre: {
+      seeds: 8000,
+      fertilizer: 8000,
+      protection: 7000,
+      labour: 12000,
+      irrigation: 5000,
+      machinery: 4000,
+      other: 4000,
+    },
+    riskLevelEn: 'High Volatility',
+    riskLevelHi: 'उच्च उतार-चढ़ाव',
+    notesHi: 'नियमित तोड़ाई और त्वरित बाजार पहुंच आवश्यक।',
+  },
+  {
+    id: 'onion',
+    nameEn: 'Onion',
+    nameHi: 'प्याज',
+    variety: 'Nashik Red / Bhima Super',
+    emoji: '🧅',
+    icon: 'spa',
+    season: 'rabi',
+    defaultYieldPerAcre: 100,
+    defaultPricePerQtl: 2200,
+    mspPrice: 0,
+    benchmarkRange: '₹1,800 - ₹2,600',
+    typicalCostsPerAcre: {
+      seeds: 9000,
+      fertilizer: 7000,
+      protection: 4500,
+      labour: 10000,
+      irrigation: 4000,
+      machinery: 3500,
+      other: 3000,
+    },
+    riskLevelEn: 'Moderate Risk',
+    riskLevelHi: 'मध्यम जोखिम',
+    notesHi: 'ड्राई वेयरहाउस में 3-4 माह भंडारण योग्य।',
+  },
+  {
+    id: 'cotton',
+    nameEn: 'Cotton',
+    nameHi: 'कपास',
+    variety: 'Bt Cotton Hybrid',
+    emoji: '☁️',
+    icon: 'spa',
+    season: 'kharif',
+    defaultYieldPerAcre: 14,
+    defaultPricePerQtl: 7200,
+    mspPrice: 6620,
+    benchmarkRange: '₹6,800 - ₹7,400',
+    typicalCostsPerAcre: {
+      seeds: 4000,
+      fertilizer: 6000,
+      protection: 5000,
+      labour: 7500,
+      irrigation: 3000,
+      machinery: 3500,
+      other: 2000,
+    },
+    riskLevelEn: 'Moderate Risk',
+    riskLevelHi: 'मध्यम जोखिम',
+    notesHi: 'टेक्सटाइल मिलों में स्थिर मांग।',
+  },
+  {
+    id: 'sugarcane',
+    nameEn: 'Sugarcane',
+    nameHi: 'गन्ना',
+    variety: 'Co-0238 / Co-0118',
+    emoji: '🎋',
+    icon: 'grass',
+    season: 'kharif',
+    defaultYieldPerAcre: 350,
+    defaultPricePerQtl: 380,
+    mspPrice: 340,
+    benchmarkRange: '₹370 - ₹400',
+    typicalCostsPerAcre: {
+      seeds: 10000,
+      fertilizer: 9000,
+      protection: 4000,
+      labour: 14000,
+      irrigation: 7000,
+      machinery: 6000,
+      other: 4000,
+    },
+    riskLevelEn: 'Very Low Risk',
+    riskLevelHi: 'न्यूनतम जोखिम (मिल खरीद)',
+    notesHi: 'सुनिश्चित चीनी मिल खरीद, लंबा फसल चक्र (10-12 माह)।',
+  },
+  {
+    id: 'maize',
+    nameEn: 'Maize (Corn)',
+    nameHi: 'मक्का',
+    variety: 'Pioneer 3396 / Dekalb',
+    emoji: '🌽',
+    icon: 'grass',
+    season: 'kharif',
+    defaultYieldPerAcre: 35,
+    defaultPricePerQtl: 2150,
+    mspPrice: 2090,
+    benchmarkRange: '₹2,050 - ₹2,250',
+    typicalCostsPerAcre: {
+      seeds: 3000,
+      fertilizer: 4500,
+      protection: 2500,
+      labour: 5000,
+      irrigation: 2500,
+      machinery: 3000,
+      other: 1500,
+    },
+    riskLevelEn: 'Low Risk',
+    riskLevelHi: 'कम जोखिम',
+    notesHi: 'पशु आहार व स्टार्च उद्योगों में निरंतर मांग।',
+  },
+  {
+    id: 'other',
+    nameEn: 'Other Crop',
+    nameHi: 'अन्य फसल',
+    variety: 'Custom Variety',
+    emoji: '🌾',
+    icon: 'more_horiz',
+    season: 'rabi',
+    defaultYieldPerAcre: 40,
+    defaultPricePerQtl: 2500,
+    mspPrice: 0,
+    benchmarkRange: '₹2,000 - ₹3,000',
+    typicalCostsPerAcre: {
+      seeds: 4000,
+      fertilizer: 5000,
+      protection: 3000,
+      labour: 6000,
+      irrigation: 3000,
+      machinery: 3500,
+      other: 1500,
+    },
+    riskLevelEn: 'Variable',
+    riskLevelHi: 'परिवर्तनशील',
+    notesHi: 'अपनी फसल के अनुसार आंकड़े दर्ज करें।',
+  },
+];
+
+// ── Cost Categories Definition ─────────────────────────────────────
+export const COST_CATEGORIES = [
+  {
+    id: 'seeds',
+    labelEn: 'Seeds & Planting Material',
+    labelHi: 'उन्नत बीज (Seeds)',
+    descEn: 'Certified seeds, seed treatment, nursery preparation',
+    descHi: 'प्रमाणित बीज, बीज शोधन एवं नर्सरी तैयारी',
+    icon: 'grass',
+    badgeColor: 'bg-secondary-fixed text-on-secondary-fixed',
+    barColor: 'bg-secondary-fixed-dim',
+  },
+  {
+    id: 'fertilizer',
+    labelEn: 'Fertilizers & Nutrients',
+    labelHi: 'खाद एवं उर्वरक (Fertilizer)',
+    descEn: 'DAP, Urea, Potash, Zinc, Organic manure, Bio-fertilizer',
+    descHi: 'DAP, यूरिया, पोटाश, जिंक, गोबर खाद, जैविक खाद',
+    icon: 'science',
+    badgeColor: 'bg-tertiary-fixed text-on-tertiary-fixed',
+    barColor: 'bg-secondary',
+  },
+  {
+    id: 'protection',
+    labelEn: 'Crop Protection & Pesticides',
+    labelHi: 'फसल सुरक्षा व कीटनाशक (Protection)',
+    descEn: 'Weedicides, fungicides, bio-pesticides, micronutrient sprays',
+    descHi: 'खरपतवार नाशक, कवकनाशी, जैविक कीटनाशक व स्प्रे',
+    icon: 'shield',
+    badgeColor: 'bg-surface-container-highest text-on-surface-variant',
+    barColor: 'bg-surface-tint',
+  },
+  {
+    id: 'labour',
+    labelEn: 'Labour & Sowing',
+    labelHi: 'मजदूरी एवं बुवाई (Labour)',
+    descEn: 'Field preparation, sowing, manual weeding, harvesting & thrashing',
+    descHi: 'खेत तैयारी, बुवाई, निराई-गुड़ाई, कटाई एवं थ्रेशिंग मानव दिवस',
+    icon: 'engineering',
+    badgeColor: 'bg-secondary-fixed text-on-secondary-fixed',
+    barColor: 'bg-primary',
+  },
+  {
+    id: 'irrigation',
+    labelEn: 'Irrigation Expenses',
+    labelHi: 'सिंचाई खर्च (Irrigation)',
+    descEn: 'Tubewell electricity, diesel pump hire, water channels, drip maintenance',
+    descHi: 'ट्यूबवेल बिजली बिल, डीजल पंप भाड़ा, नाली/ड्रिप रखरखाव',
+    icon: 'water_drop',
+    badgeColor: 'bg-primary-fixed text-on-primary-fixed',
+    barColor: 'bg-tertiary-fixed-dim',
+  },
+  {
+    id: 'machinery',
+    labelEn: 'Tractor & Machinery',
+    labelHi: 'जुताई व मशीनरी (Machinery)',
+    descEn: 'Rotavator, cultivator, seed drill, harvester/combine rental',
+    descHi: 'रोटावेटर, कल्टीवेटर, सीड ड्रिल, हार्वेस्टर कंबाइन भाड़ा',
+    icon: 'precision_manufacturing',
+    badgeColor: 'bg-surface-container-highest text-on-surface',
+    barColor: 'bg-tertiary-container',
+  },
+  {
+    id: 'other',
+    labelEn: 'Other & Mandi Logistics',
+    labelHi: 'अन्य / आकस्मिक खर्च (Other Logistics)',
+    descEn: 'Gunny bags, ropes, local loading, mandi transport, cess & fees',
+    descHi: 'बोरी, सुतली, खेत से लोडिंग, मंडी ढुलाई भाड़ा व आकस्मिक व्यय',
+    icon: 'inventory_2',
+    badgeColor: 'bg-surface-container text-on-surface-variant',
+    barColor: 'bg-outline-variant',
+  },
+];
+
+// ── States & Mandi Benchmarks ──────────────────────────────────────
+export const STATE_DISTRICTS = {
+  'Uttar Pradesh': ['Meerut', 'Hapur', 'Bulandshahr', 'Aligarh', 'Agra', 'Muzaffarnagar', 'Mathura', 'Moradabad', 'Bareilly', 'Lucknow'],
+  'Punjab': ['Ludhiana', 'Khanna', 'Patiala', 'Amritsar', 'Bathinda', 'Jalandhar', 'Ferozepur', 'Sangrur'],
+  'Haryana': ['Karnal', 'Kurukshetra', 'Ambala', 'Hisar', 'Panipat', 'Sirsa', 'Rohtak', 'Sonipat'],
+  'Madhya Pradesh': ['Indore', 'Ujjain', 'Bhopal', 'Dewas', 'Hoshangabad', 'Sehore', 'Vidisha', 'Gwalior'],
+  'Rajasthan': ['Bharatpur', 'Kota', 'Alwar', 'Sri Ganganagar', 'Jaipur', 'Bikaner', 'Tonk'],
+  'Maharashtra': ['Nashik', 'Pune', 'Ahmednagar', 'Nagpur', 'Kolhapur', 'Solapur', 'Aurangabad'],
+  'Gujarat': ['Rajkot', 'Ahmedabad', 'Surat', 'Vadodara', 'Bhavnagar', 'Junagadh'],
+  'Bihar': ['Patna', 'Muzaffarpur', 'Bhagalpur', 'Gaya', 'Begusarai', 'Darbhanga'],
+};
+
+export const MANDI_BENCHMARKS = [
+  {
+    id: 'm1',
+    mandiName: 'मेरठ नवीन मंडी (Meerut APMC)',
+    state: 'Uttar Pradesh',
+    cropId: 'wheat',
+    cropHi: 'गेहूं (Wheat)',
+    modalPrice: 2390,
+    minPrice: 2320,
+    maxPrice: 2440,
+    msp: 2275,
+    arrivalTons: 420,
+    updated: 'Today 09:30 AM',
+  },
+  {
+    id: 'm2',
+    mandiName: 'खन्ना एशिया मंडी (Khanna APMC)',
+    state: 'Punjab',
+    cropId: 'wheat',
+    cropHi: 'गेहूं (Wheat)',
+    modalPrice: 2420,
+    minPrice: 2350,
+    maxPrice: 2480,
+    msp: 2275,
+    arrivalTons: 680,
+    updated: 'Today 10:15 AM',
+  },
+  {
+    id: 'm3',
+    mandiName: 'करनाल मंडी (Karnal APMC)',
+    state: 'Haryana',
+    cropId: 'paddy',
+    cropHi: 'धान 1121 (Basmati)',
+    modalPrice: 4250,
+    minPrice: 4100,
+    maxPrice: 4400,
+    msp: 2183,
+    arrivalTons: 310,
+    updated: 'Today 08:45 AM',
+  },
+  {
+    id: 'm4',
+    mandiName: 'भरतपुर कृषि मंडी (Bharatpur)',
+    state: 'Rajasthan',
+    cropId: 'mustard',
+    cropHi: 'सरसों (Mustard)',
+    modalPrice: 5520,
+    minPrice: 5350,
+    maxPrice: 5680,
+    msp: 5650,
+    arrivalTons: 250,
+    updated: 'Today 11:00 AM',
+  },
+  {
+    id: 'm5',
+    mandiName: 'आगरा आलू मंडी (Agra APMC)',
+    state: 'Uttar Pradesh',
+    cropId: 'potato',
+    cropHi: 'आलू (Potato)',
+    modalPrice: 1480,
+    minPrice: 1350,
+    maxPrice: 1620,
+    msp: 0,
+    arrivalTons: 950,
+    updated: 'Today 10:00 AM',
+  },
+  {
+    id: 'm6',
+    mandiName: 'इंदौर चोइथराम मंडी (Indore)',
+    state: 'Madhya Pradesh',
+    cropId: 'gram',
+    cropHi: 'चना (Gram)',
+    modalPrice: 5900,
+    minPrice: 5750,
+    maxPrice: 6150,
+    msp: 5440,
+    arrivalTons: 190,
+    updated: 'Today 09:00 AM',
+  },
+];
+
+// ── Default Preset (Wheat 2 Acres, matching Stitch reference) ─────────
+export const DEFAULT_CALCULATION = {
+  id: 'CPC-2026-9941',
+  cropId: 'wheat',
+  customCropName: '',
+  area: 2.0,
+  areaUnit: 'acre',
+  state: 'Uttar Pradesh',
+  district: 'Meerut',
+  season: 'rabi',
+  seasonYear: '2026-27',
+  costs: {
+    seeds: 8000,
+    fertilizer: 10000,
+    protection: 5000,
+    labour: 12000,
+    irrigation: 5000,
+    machinery: 6000,
+    other: 2500,
+  },
+  expectedYield: 120,
+  yieldUnit: 'quintal',
+  sellingPrice: 2400,
+  createdAt: '2026-09-17T10:00:00Z',
+  title: 'गेहूं (Wheat) • 2.0 एकड़',
+};
+
+// ── Initial Mock History ───────────────────────────────────────────
+export const INITIAL_CALCULATIONS_HISTORY = [
+  {
+    id: 'CPC-2026-9941',
+    cropId: 'wheat',
+    cropNameEn: 'Wheat (HD-2967)',
+    cropNameHi: 'गेहूं (HD-2967)',
+    emoji: '🌾',
+    area: 2.0,
+    areaUnit: 'acre',
+    state: 'Uttar Pradesh',
+    district: 'Meerut',
+    season: 'rabi',
+    seasonYear: '2026-27',
+    costs: {
+      seeds: 8000,
+      fertilizer: 10000,
+      protection: 5000,
+      labour: 12000,
+      irrigation: 5000,
+      machinery: 6000,
+      other: 2500,
+    },
+    totalCost: 48500,
+    expectedYield: 120,
+    yieldUnit: 'quintal',
+    sellingPrice: 2400,
+    grossRevenue: 288000,
+    netProfit: 239500,
+    profitPerAcre: 119750,
+    roi: 493.8,
+    breakEvenPrice: 404,
+    date: '17 Sep 2026',
+  },
+  {
+    id: 'CPC-2026-7720',
+    cropId: 'mustard',
+    cropNameEn: 'Mustard (Giriraj)',
+    cropNameHi: 'सरसों (गिरिराज)',
+    emoji: '🌼',
+    area: 3.0,
+    areaUnit: 'acre',
+    state: 'Rajasthan',
+    district: 'Bharatpur',
+    season: 'rabi',
+    seasonYear: '2025-26',
+    costs: {
+      seeds: 7500,
+      fertilizer: 12000,
+      protection: 6000,
+      labour: 13500,
+      irrigation: 4500,
+      machinery: 7500,
+      other: 3000,
+    },
+    totalCost: 54000,
+    expectedYield: 45,
+    yieldUnit: 'quintal',
+    sellingPrice: 5450,
+    grossRevenue: 245250,
+    netProfit: 191250,
+    profitPerAcre: 63750,
+    roi: 354.2,
+    breakEvenPrice: 1200,
+    date: '05 Nov 2025',
+  },
+  {
+    id: 'CPC-2025-4122',
+    cropId: 'paddy',
+    cropNameEn: 'Basmati Paddy (Pusa 1121)',
+    cropNameHi: 'धान बासमती (पूसा 1121)',
+    emoji: '🌾',
+    area: 2.5,
+    areaUnit: 'acre',
+    state: 'Haryana',
+    district: 'Karnal',
+    season: 'kharif',
+    seasonYear: '2025',
+    costs: {
+      seeds: 8750,
+      fertilizer: 16250,
+      protection: 8750,
+      labour: 20000,
+      irrigation: 11250,
+      machinery: 10000,
+      other: 5000,
+    },
+    totalCost: 80000,
+    expectedYield: 62.5,
+    yieldUnit: 'quintal',
+    sellingPrice: 4150,
+    grossRevenue: 259375,
+    netProfit: 179375,
+    profitPerAcre: 71750,
+    roi: 224.2,
+    breakEvenPrice: 1280,
+    date: '14 Jul 2025',
+  },
+  {
+    id: 'CPC-2025-1890',
+    cropId: 'potato',
+    cropNameEn: 'Potato (Kufri Jyoti)',
+    cropNameHi: 'आलू (कुफरी ज्योति)',
+    emoji: '🥔',
+    area: 1.5,
+    areaUnit: 'acre',
+    state: 'Uttar Pradesh',
+    district: 'Agra',
+    season: 'rabi',
+    seasonYear: '2024-25',
+    costs: {
+      seeds: 27000,
+      fertilizer: 13500,
+      protection: 7500,
+      labour: 13500,
+      irrigation: 6000,
+      machinery: 7500,
+      other: 5250,
+    },
+    totalCost: 80250,
+    expectedYield: 180,
+    yieldUnit: 'quintal',
+    sellingPrice: 1450,
+    grossRevenue: 261000,
+    netProfit: 180750,
+    profitPerAcre: 120500,
+    roi: 225.2,
+    breakEvenPrice: 446,
+    date: '22 Oct 2024',
+  },
+];
+
+// ── Calculation Helper Engine ──────────────────────────────────────
+export function calculateCropProfit(params) {
+  const {
+    area = 2,
+    areaUnit = 'acre',
+    costs = {},
+    expectedYield = 120,
+    yieldUnit = 'quintal',
+    sellingPrice = 2400,
+  } = params || {};
+
+  // 1. Normalized area in Acres
+  const numericArea = Math.max(0.1, Number(area) || 1);
+  const normalizedAcres = areaUnit === 'hectare' ? numericArea * 2.47105 : numericArea;
+
+  // 2. Total Cultivation Cost
+  const cleanCosts = {
+    seeds: Math.max(0, Number(costs.seeds) || 0),
+    fertilizer: Math.max(0, Number(costs.fertilizer) || 0),
+    protection: Math.max(0, Number(costs.protection) || 0),
+    labour: Math.max(0, Number(costs.labour) || 0),
+    irrigation: Math.max(0, Number(costs.irrigation) || 0),
+    machinery: Math.max(0, Number(costs.machinery) || 0),
+    other: Math.max(0, Number(costs.other) || 0),
+  };
+
+  const totalCost = Object.values(cleanCosts).reduce((acc, curr) => acc + curr, 0);
+  const costPerAcre = normalizedAcres > 0 ? Math.round(totalCost / normalizedAcres) : totalCost;
+
+  // 3. Normalized Yield in Quintals
+  const rawYield = Math.max(0, Number(expectedYield) || 0);
+  let normalizedYieldQtl = rawYield;
+  if (yieldUnit === 'ton') {
+    normalizedYieldQtl = rawYield * 10;
+  } else if (yieldUnit === 'kg') {
+    normalizedYieldQtl = rawYield / 100;
+  }
+
+  const yieldPerAcre = normalizedAcres > 0 ? (normalizedYieldQtl / normalizedAcres).toFixed(1) : normalizedYieldQtl;
+
+  // 4. Selling Price per Quintal
+  const cleanPrice = Math.max(0, Number(sellingPrice) || 0);
+
+  // 5. Gross Revenue
+  const grossRevenue = Math.round(normalizedYieldQtl * cleanPrice);
+
+  // 6. Net Profit
+  const netProfit = Math.round(grossRevenue - totalCost);
+  const profitPerAcre = normalizedAcres > 0 ? Math.round(netProfit / normalizedAcres) : netProfit;
+
+  // 7. ROI Percentage
+  const roi = totalCost > 0 ? ((netProfit / totalCost) * 100).toFixed(1) : '0.0';
+
+  // 8. Break-Even Metrics
+  const breakEvenPrice = normalizedYieldQtl > 0 ? Math.round(totalCost / normalizedYieldQtl) : 0;
+  const breakEvenYield = cleanPrice > 0 ? (totalCost / cleanPrice).toFixed(1) : 0;
+  const breakEvenYieldPercent = normalizedYieldQtl > 0 ? ((breakEvenYield / normalizedYieldQtl) * 100).toFixed(1) : '0.0';
+
+  // Safety buffer %: How much can the market price fall before the farmer loses money?
+  const safePriceDrop = Math.max(0, cleanPrice - breakEvenPrice);
+  const safetyMarginPercent = cleanPrice > 0 ? Math.min(100, Math.max(0, ((safePriceDrop / cleanPrice) * 100))).toFixed(1) : '0.0';
+
+  // 9. Cost Breakdown Percentage
+  const costBreakdown = COST_CATEGORIES.map((cat) => {
+    const amount = cleanCosts[cat.id] || 0;
+    const percent = totalCost > 0 ? ((amount / totalCost) * 100).toFixed(1) : '0.0';
+    return {
+      ...cat,
+      amount,
+      percent: Number(percent),
+    };
+  });
+
+  // 10. Price Scenarios (Low / Base / High)
+  const lowPrice = Math.max(Math.round(cleanPrice * 0.875), breakEvenPrice > 0 ? Math.round(breakEvenPrice * 1.1) : 0);
+  const lowRevenue = Math.round(normalizedYieldQtl * lowPrice);
+  const lowProfit = Math.round(lowRevenue - totalCost);
+
+  const highPrice = Math.round(cleanPrice * 1.15);
+  const highRevenue = Math.round(normalizedYieldQtl * highPrice);
+  const highProfit = Math.round(highRevenue - totalCost);
+
+  const scenarios = [
+    {
+      id: 'low',
+      titleEn: 'MSP / Low Market Price',
+      titleHi: 'न्यूनतम समर्थन मूल्य (MSP मंदी)',
+      tagHi: 'सुरक्षित तल',
+      price: lowPrice,
+      revenue: lowRevenue,
+      profit: lowProfit,
+      extraDiff: lowProfit - netProfit,
+      safeStatusHi: lowProfit >= 0 ? 'सुरक्षित ✓' : 'घाटा ✕',
+      dotColor: 'bg-outline',
+    },
+    {
+      id: 'base',
+      titleEn: 'Current Expected Target',
+      titleHi: 'अपेक्षित वर्तमान बाजार भाव',
+      tagHi: 'वर्तमान लक्ष्य 🎯',
+      price: cleanPrice,
+      revenue: grossRevenue,
+      profit: netProfit,
+      extraDiff: 0,
+      safeStatusHi: 'आधारित लाभ',
+      dotColor: 'bg-secondary',
+      isCurrent: true,
+    },
+    {
+      id: 'high',
+      titleEn: 'Peak / Festive Market Surge',
+      titleHi: 'तेजी / त्योहारी सीजन भाव',
+      tagHi: 'बंपर लाभ 🚀',
+      price: highPrice,
+      revenue: highRevenue,
+      profit: highProfit,
+      extraDiff: highProfit - netProfit,
+      safeStatusHi: `+₹${(highProfit - netProfit).toLocaleString('en-IN')} अतिरिक्त`,
+      dotColor: 'bg-tertiary-container',
+    },
+  ];
+
+  return {
+    normalizedAcres: Number(normalizedAcres.toFixed(2)),
+    normalizedYieldQtl: Number(normalizedYieldQtl.toFixed(1)),
+    yieldPerAcre: Number(yieldPerAcre),
+    totalCost,
+    costPerAcre,
+    cleanCosts,
+    grossRevenue,
+    netProfit,
+    profitPerAcre,
+    roi: Number(roi),
+    breakEvenPrice,
+    breakEvenYield: Number(breakEvenYield),
+    breakEvenYieldPercent: Number(breakEvenYieldPercent),
+    safePriceDrop,
+    safetyMarginPercent: Number(safetyMarginPercent),
+    costBreakdown,
+    scenarios,
+  };
+}

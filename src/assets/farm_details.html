@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Farmer Helper - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Poppins:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#f3f0ef",
+                      "secondary": "#006e1c",
+                      "background": "#fcf9f8",
+                      "surface-container": "#f0eded",
+                      "on-tertiary-fixed": "#261a00",
+                      "surface": "#fcf9f8",
+                      "on-secondary": "#ffffff",
+                      "surface-container-highest": "#e5e2e1",
+                      "inverse-primary": "#91d78a",
+                      "surface-tint": "#2a6b2c",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#303030",
+                      "on-secondary-fixed-variant": "#005313",
+                      "primary-fixed": "#acf4a4",
+                      "secondary-container": "#91f78e",
+                      "outline": "#717a6d",
+                      "primary-fixed-dim": "#91d78a",
+                      "on-error-container": "#93000a",
+                      "on-primary-container": "#90d689",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#1b1c1c",
+                      "primary-container": "#1b5e20",
+                      "tertiary-fixed-dim": "#f8bd2a",
+                      "secondary-fixed": "#94f990",
+                      "on-surface-variant": "#41493e",
+                      "on-tertiary-fixed-variant": "#5c4300",
+                      "tertiary": "#4c3700",
+                      "outline-variant": "#c0c9bb",
+                      "on-error": "#ffffff",
+                      "tertiary-container": "#694d00",
+                      "surface-container-low": "#f6f3f2",
+                      "primary": "#00450d",
+                      "on-surface": "#1b1c1c",
+                      "on-primary-fixed-variant": "#0c5216",
+                      "on-tertiary-container": "#f6bc28",
+                      "secondary-fixed-dim": "#78dc77",
+                      "on-secondary-fixed": "#002204",
+                      "surface-container-high": "#eae7e7",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "surface-bright": "#fcf9f8",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#dcd9d9",
+                      "on-secondary-container": "#00731e",
+                      "surface-variant": "#e5e2e1",
+                      "tertiary-fixed": "#ffdfa0",
+                      "on-primary-fixed": "#002203"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "0.5rem",
+                      "stack-lg": "2rem",
+                      "container-padding-desktop": "2.5rem",
+                      "gutter": "1.5rem",
+                      "container-padding-mobile": "1rem",
+                      "unit": "8px",
+                      "stack-md": "1rem"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Poppins"
+                      ],
+                      "headline-lg": [
+                              "Poppins"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Poppins"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "display-lg-mobile": [
+                              "Poppins"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "60px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .form-radio:checked {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+            border-color: transparent;
+            background-color: currentColor;
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .form-radio {
+            appearance: none;
+            padding: 0;
+            color-adjust: exact;
+            display: inline-block;
+            vertical-align: middle;
+            background-origin: border-box;
+            user-select: none;
+            flex-shrink: 0;
+            border-radius: 100%;
+            border-width: 1px;
+        }
+      </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 antialiased">
+<!-- Main Container -->
+<main class="w-full max-w-2xl bg-surface-container-lowest rounded-[24px] shadow-[0px_4px_20px_rgba(0,0,0,0.15)] border border-outline-variant/30 overflow-hidden">
+<!-- Header Image Area -->
+<div class="h-48 w-full relative">
+<img class="object-cover w-full h-full" data-alt="A sweeping aerial view of a vibrant, healthy green agricultural field at sunrise, illuminated by soft morning sunlight. The crops are perfectly arranged in neat rows, demonstrating modern farming precision. The scene evokes a sense of organic growth and professional agricultural management, fitting for a premium agritech platform. The light is warm and inviting, casting subtle shadows that highlight the texture of the soil and plants." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuiHViqfnXWNntUYFjo-eT9R0cBx_qSRpy6RlSoSROhbbvvyage6ajvdNb39Y2rEO1Z3M9Ub1xZTyzzUmC9xfHwztN55EUM0-7iOvJXMnU40__cAfO4xTsvUabFwOzLyJethDo_B1a5M6aEmYEkGCv9NF9-O2JRXaRKstUrN9x8Q-sFCtMp6I_xH7JuzlivDSauX6JslwrkFvYEcXU3yjB3B0IEFj2udsC3cCHXOv2hASokSenYqbF"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+</div>
+<div class="px-8 pb-8 pt-4 sm:px-12 sm:pb-12">
+<!-- Header Text -->
+<div class="mb-8 text-center">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-4" data-icon="eco" style="font-variation-settings: 'FILL' 1;">eco</span>
+<h1 class="font-headline-lg text-headline-lg md:font-display-lg md:text-display-lg text-primary-container mb-2">Tell Us About Your Farm</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Help us customize your experience with accurate local data.</p>
+</div>
+<!-- Form -->
+<form action="#" class="space-y-6" method="POST">
+<!-- Location Group -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- State Dropdown -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="state">State</label>
+<div class="relative">
+<select class="block w-full rounded-lg border border-outline-variant py-3 px-4 text-on-surface focus:border-primary-container focus:ring-primary-container bg-surface-container-lowest appearance-none pr-10" id="state" name="state">
+<option disabled="" selected="" value="">Select your state</option>
+<option value="CA">California</option>
+<option value="IA">Iowa</option>
+<option value="TX">Texas</option>
+<!-- Add more as needed -->
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-outline">
+<span class="material-symbols-outlined" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- District Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="district">District / County</label>
+<input class="block w-full rounded-lg border border-outline-variant py-3 px-4 text-on-surface focus:border-primary-container focus:ring-primary-container bg-surface-container-lowest" id="district" name="district" placeholder="e.g. Fresno" type="text"/>
+</div>
+</div>
+<!-- Village Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="village">Village / Town</label>
+<input class="block w-full rounded-lg border border-outline-variant py-3 px-4 text-on-surface focus:border-primary-container focus:ring-primary-container bg-surface-container-lowest" id="village" name="village" placeholder="Enter your local area" type="text"/>
+</div>
+<hr class="border-outline-variant/30 my-8"/>
+<!-- Land Details Group -->
+<div class="space-y-6">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="land_size">Total Land Size</label>
+<div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+<input class="block w-full sm:w-1/2 rounded-lg border border-outline-variant py-3 px-4 text-on-surface focus:border-primary-container focus:ring-primary-container bg-surface-container-lowest" id="land_size" name="land_size" placeholder="0.00" type="number"/>
+<div class="flex gap-4">
+<label class="flex items-center gap-2 cursor-pointer p-3 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors">
+<input checked="" class="form-radio h-5 w-5 text-primary-container border-outline-variant focus:ring-primary-container" name="land_unit" type="radio" value="acre"/>
+<span class="font-body-md text-body-md">Acre</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer p-3 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors">
+<input class="form-radio h-5 w-5 text-primary-container border-outline-variant focus:ring-primary-container" name="land_unit" type="radio" value="hectare"/>
+<span class="font-body-md text-body-md">Hectare</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Current Crop -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="current_crop">Primary Crop Currently Grown</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline" data-icon="grass">grass</span>
+</div>
+<input class="block w-full rounded-lg border border-outline-variant py-3 pl-12 pr-4 text-on-surface focus:border-primary-container focus:ring-primary-container bg-surface-container-lowest" id="current_crop" name="current_crop" placeholder="e.g. Wheat, Corn, Soybeans" type="text"/>
+</div>
+</div>
+</div>
+<hr class="border-outline-variant/30 my-8"/>
+<!-- Irrigation Type -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-3">Primary Irrigation Type</label>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<label class="flex flex-col items-center justify-center p-4 rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-low hover:border-primary-container transition-all group relative">
+<input class="absolute top-3 left-3 form-radio h-4 w-4 text-primary-container border-outline-variant focus:ring-primary-container opacity-0 md:opacity-100" name="irrigation" type="radio" value="rainfed"/>
+<span class="material-symbols-outlined text-3xl mb-2 text-outline group-hover:text-primary-container transition-colors" data-icon="rainy">rainy</span>
+<span class="font-body-md text-body-md text-center">Rainfed</span>
+</label>
+<label class="flex flex-col items-center justify-center p-4 rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-low hover:border-primary-container transition-all group relative">
+<input class="absolute top-3 left-3 form-radio h-4 w-4 text-primary-container border-outline-variant focus:ring-primary-container opacity-0 md:opacity-100" name="irrigation" type="radio" value="tube_well"/>
+<span class="material-symbols-outlined text-3xl mb-2 text-outline group-hover:text-primary-container transition-colors" data-icon="water_drop">water_drop</span>
+<span class="font-body-md text-body-md text-center">Tube Well</span>
+</label>
+<label class="flex flex-col items-center justify-center p-4 rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-low hover:border-primary-container transition-all group relative">
+<input class="absolute top-3 left-3 form-radio h-4 w-4 text-primary-container border-outline-variant focus:ring-primary-container opacity-0 md:opacity-100" name="irrigation" type="radio" value="canal"/>
+<span class="material-symbols-outlined text-3xl mb-2 text-outline group-hover:text-primary-container transition-colors" data-icon="waves">waves</span>
+<span class="font-body-md text-body-md text-center">Canal</span>
+</label>
+<label class="flex flex-col items-center justify-center p-4 rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-low hover:border-primary-container transition-all group relative">
+<input class="absolute top-3 left-3 form-radio h-4 w-4 text-primary-container border-outline-variant focus:ring-primary-container opacity-0 md:opacity-100" name="irrigation" type="radio" value="other"/>
+<span class="material-symbols-outlined text-3xl mb-2 text-outline group-hover:text-primary-container transition-colors" data-icon="add_circle">add_circle</span>
+<span class="font-body-md text-body-md text-center">Other</span>
+</label>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-6 mt-8 flex flex-col sm:flex-row-reverse gap-4">
+<button class="flex-1 sm:flex-none inline-flex items-center justify-center h-14 px-8 rounded-2xl bg-primary-container text-on-primary font-label-md text-label-md shadow-md hover:bg-surface-tint hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-container" type="submit">
+                        Continue
+                        <span class="material-symbols-outlined ml-2" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="flex-1 sm:flex-none inline-flex items-center justify-center h-14 px-8 rounded-2xl bg-transparent border-2 border-outline-variant text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low hover:text-on-surface transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-outline" type="button">
+                        Skip for now
+                    </button>
+</div>
+</form>
+</div>
+</main>
+<script>
+        // Simple script to handle radio button visual selection state for irrigation cards
+        document.querySelectorAll('input[name="irrigation"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Reset all
+                document.querySelectorAll('input[name="irrigation"]').forEach(r => {
+                    const card = r.closest('label');
+                    card.classList.remove('border-primary-container', 'bg-surface-container-low');
+                    card.classList.add('border-outline-variant');
+                    card.querySelector('.material-symbols-outlined').classList.remove('text-primary-container');
+                    card.querySelector('.material-symbols-outlined').classList.add('text-outline');
+                });
+                
+                // Set active
+                if(this.checked) {
+                    const card = this.closest('label');
+                    card.classList.remove('border-outline-variant');
+                    card.classList.add('border-primary-container', 'bg-surface-container-low');
+                    card.querySelector('.material-symbols-outlined').classList.remove('text-outline');
+                    card.querySelector('.material-symbols-outlined').classList.add('text-primary-container');
+                }
+            });
+        });
+    </script>
+</body></html>

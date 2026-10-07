@@ -1,0 +1,50 @@
+export const ROLE_NAVIGATION = {
+  farmer: [
+    { id: 'dashboard', labelEn: 'Dashboard', labelHi: 'डैशबोर्ड', icon: 'dashboard', path: '/dashboard' },
+    { id: 'resourceSharing', labelEn: 'Resource Sharing', labelHi: 'संसाधन साझा', icon: 'handshake', path: '/resources' },
+    { id: 'khetDoctor', labelEn: 'Mera Khet Ka Doctor', labelHi: 'मेरा खेत का डॉक्टर', icon: 'medical_services', path: '/crop-doctor' },
+    { id: 'lossReports', labelEn: 'Crop Loss Reports', labelHi: 'फसल नुकसान रिपोर्ट', icon: 'report_problem', path: '/crop-loss' },
+    { id: 'storageFinder', labelEn: 'Storage Finder', labelHi: 'भंडारण खोजें', icon: 'warehouse', path: '/storage' },
+    { id: 'profitCalc', labelEn: 'Profit Calculator', labelHi: 'लाभ कैलकुलेटर', icon: 'calculate', path: '/profit-calculator' },
+    { id: 'internships', labelEn: 'Internships', labelHi: 'इंटर्नशिप व प्रशिक्षण', icon: 'school', path: '/internships' },
+    { id: 'messages', labelEn: 'Messages & Chat', labelHi: 'संदेश व चैट', icon: 'chat', path: '/chat' },
+    { id: 'community', labelEn: 'Community', labelHi: 'किसान समुदाय', icon: 'groups', path: '/community' },
+    { id: 'govSchemes', labelEn: 'Government Schemes', labelHi: 'सरकारी योजनाएं', icon: 'gavel', path: '/government-schemes' },
+    { id: 'bestBuyers', labelEn: 'Best Buyers / Marketplace', labelHi: 'सर्वश्रेष्ठ खरीदार', icon: 'storefront', path: '/buyers' },
+  ],
+  student: [
+    { id: 'dashboard', labelEn: 'Dashboard', labelHi: 'डैशबोर्ड', icon: 'dashboard', path: '/dashboard' },
+    { id: 'internships', labelEn: 'Internships', labelHi: 'इंटर्नशिप', icon: 'school', path: '/internships' },
+    { id: 'messages', labelEn: 'Messages & Chat', labelHi: 'संदेश व चैट', icon: 'chat', path: '/chat' },
+    { id: 'training', labelEn: 'Training & Workshops', labelHi: 'प्रशिक्षण व कार्यशालाएं', icon: 'psychology', path: '/student/training-workshops' },
+    { id: 'community', labelEn: 'Community', labelHi: 'छात्र व किसान समुदाय', icon: 'groups', path: '/community' },
+    { id: 'myApplications', labelEn: 'My Applications', labelHi: 'मेरे आवेदन', icon: 'folder_shared', path: '/internships?tab=applications' },
+    { id: 'studentProfile', labelEn: 'Student Profile', labelHi: 'छात्र प्रोफाइल', icon: 'person', path: '/dashboard?tab=profile' },
+  ],
+  buyer: [
+    { id: 'dashboard', labelEn: 'Dashboard', labelHi: 'डैशबोर्ड', icon: 'dashboard', path: '/dashboard' },
+    { id: 'farmProduce', labelEn: 'Farm Produce', labelHi: 'कृषि उपज', icon: 'agriculture', path: '/dashboard?tab=produce' },
+    { id: 'buyingRequirements', labelEn: 'Buying Requirements', labelHi: 'मेरी खरीद मांग', icon: 'assignment', path: '/dashboard?tab=requirements' },
+    { id: 'messages', labelEn: 'Messages & Chat', labelHi: 'संदेश व चैट', icon: 'chat', path: '/chat' },
+    { id: 'storageFinder', labelEn: 'Storage Finder', labelHi: 'भंडारण खोजें', icon: 'warehouse', path: '/storage' },
+    { id: 'resourceSharing', labelEn: 'Resource Logistics', labelHi: 'साधन व लॉजिस्टिक्स', icon: 'handshake', path: '/resources' },
+    { id: 'community', labelEn: 'Community', labelHi: 'कृषि व्यापार समुदाय', icon: 'groups', path: '/community' },
+    { id: 'buyerProfile', labelEn: 'Buyer Profile', labelHi: 'खरीदार प्रोफाइल', icon: 'business', path: '/dashboard?tab=profile' },
+  ],
+  provider: [
+    { id: 'dashboard', labelEn: 'Dashboard', labelHi: 'डैशबोर्ड', icon: 'dashboard', path: '/dashboard' },
+    { id: 'resourceSharing', labelEn: 'Resource Sharing', labelHi: 'संसाधन साझा', icon: 'handshake', path: '/resources' },
+    { id: 'messages', labelEn: 'Messages & Chat', labelHi: 'संदेश व चैट', icon: 'chat', path: '/chat' },
+    { id: 'myListings', labelEn: 'My Resources / Listings', labelHi: 'मेरे सूचीबद्ध साधन', icon: 'inventory_2', path: '/resources?tab=my-listings' },
+    { id: 'community', labelEn: 'Community', labelHi: 'सेवा प्रदाता समुदाय', icon: 'groups', path: '/community' },
+    { id: 'providerProfile', labelEn: 'Provider Profile', labelHi: 'प्रदाता प्रोफाइल', icon: 'badge', path: '/dashboard?tab=profile' },
+  ],
+};
+
+export const ROLE_LABELS = {
+  farmer: { en: 'Farmer', hi: 'किसान', icon: 'agriculture', badgeBg: 'bg-primary/10', badgeText: 'text-primary' },
+  student: { en: 'Student', hi: 'छात्र', icon: 'school', badgeBg: 'bg-blue-500/10', badgeText: 'text-blue-700' },
+  buyer: { en: 'Buyer', hi: 'खरीदार', icon: 'storefront', badgeBg: 'bg-amber-500/10', badgeText: 'text-amber-800' },
+  provider: { en: 'Resource Provider', hi: 'संसाधन प्रदाता', icon: 'handshake', badgeBg: 'bg-emerald-500/10', badgeText: 'text-emerald-800' },
+  admin: { en: 'Administrator', hi: 'व्यवस्थापक', icon: 'admin_panel_settings', badgeBg: 'bg-emerald-900/15', badgeText: 'text-[#115322]' },
+};
